@@ -1,0 +1,11 @@
+[Unit]
+Description=Expose Podman socket using socat
+Requires=network.target podman.socket
+After=network.target podman.socket
+
+[Service]
+ExecStart=/usr/bin/socat TCP-LISTEN:2375,reuseaddr,fork,bind=0.0.0.0 UNIX-SOCKET:/var/run/podman/podman.sock
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
